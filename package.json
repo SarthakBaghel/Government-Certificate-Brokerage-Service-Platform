@@ -1,0 +1,34 @@
+{
+  "name": "sevasetu-government-certificate-platform",
+  "version": "1.0.0",
+  "description": "React, Tailwind, and Node.js government certificate assistance platform.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "backend": "node server.js",
+    "frontend": "vite --host 127.0.0.1",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "start": "node server.js",
+    "check": "node --check server.js && vite build",
+    "test": "node scripts/smoke-test.mjs"
+  },
+  "keywords": [
+    "government-services",
+    "certificate-assistance",
+    "service-agent",
+    "admin-dashboard"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "postcss": "^8.4.49",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.7"
+  }
+}
