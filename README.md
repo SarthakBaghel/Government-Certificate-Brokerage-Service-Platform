@@ -43,6 +43,8 @@ Then visit:
 http://127.0.0.1:5173
 ```
 
+For local frontend-to-backend API calls, Vite proxies `/api` to `http://127.0.0.1:3000`.
+
 Demo accounts:
 
 - Citizen: `citizen@sevasetu.test` / `Citizen@123`
@@ -57,6 +59,73 @@ npm start
 ```
 
 Then visit `http://127.0.0.1:3000`.
+
+## Separate Deployment
+
+Deploy the backend and frontend separately.
+
+### Backend on Render
+
+Create a new Render Web Service from this GitHub repository.
+
+Recommended settings:
+
+```text
+Build Command: npm install
+Start Command: npm start
+```
+
+Environment variables:
+
+```text
+NODE_ENV=production
+SEVASETU_TOKEN_SECRET=<any-long-random-secret>
+FRONTEND_URL=https://your-vercel-frontend-url.vercel.app
+```
+
+Render will provide a backend URL like:
+
+```text
+https://your-render-service.onrender.com
+```
+
+Health check:
+
+```text
+https://your-render-service.onrender.com/api/health
+```
+
+Note: the demo uses JSON file storage. On free/serverless-style hosting this is fine for project demonstration, but a production app should move data to MongoDB Atlas or PostgreSQL.
+
+### Frontend on Vercel
+
+Import the same GitHub repository into Vercel.
+
+Recommended settings:
+
+```text
+Framework Preset: Vite
+Build Command: npm run build
+Output Directory: dist
+```
+
+Environment variable:
+
+```text
+VITE_API_URL=https://your-render-service.onrender.com/api
+```
+
+After deployment, use the Vercel URL as the Project Deployed Link:
+
+```text
+https://your-vercel-project.vercel.app
+```
+
+### Useful Files
+
+- `vercel.json` contains Vercel build/output settings and SPA rewrites.
+- `render.yaml` contains a Render backend blueprint.
+- `.env.example` shows the required environment variables.
 
 ## Phase Plan
 

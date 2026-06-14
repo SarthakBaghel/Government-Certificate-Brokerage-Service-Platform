@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-const API = "/api";
+const API_BASE = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
 const demoAccounts = [
   { role: "Citizen", email: "citizen@sevasetu.test", password: "Citizen@123" },
   { role: "Agent", email: "agent@sevasetu.test", password: "Agent@123" },
@@ -43,7 +43,7 @@ function App() {
   const [authMode, setAuthMode] = useState("login");
 
   async function api(path, options = {}) {
-    const response = await fetch(`${API}${path}`, {
+    const response = await fetch(`${API_BASE}${path}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
@@ -165,7 +165,7 @@ function AuthScreen({ authMode, setAuthMode, login, setMessage }) {
   async function submitRegister(event) {
     event.preventDefault();
     try {
-      const response = await fetch(`${API}/auth/register`, {
+      const response = await fetch(`${API_BASE}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
@@ -182,7 +182,7 @@ function AuthScreen({ authMode, setAuthMode, login, setMessage }) {
   async function submitAgent(event) {
     event.preventDefault();
     try {
-      const response = await fetch(`${API}/agents/register`, {
+      const response = await fetch(`${API_BASE}/agents/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, skills: "Certificate, Identity" })

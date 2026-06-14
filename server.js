@@ -6,10 +6,19 @@ const cors = require("cors");
 
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
-const DATA_FILE = path.join(__dirname, "data", "db.json");
+const HOST = process.env.HOST || "0.0.0.0";
+const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, "data", "db.json");
 const TOKEN_SECRET = process.env.SEVASETU_TOKEN_SECRET || "local-demo-secret";
+const allowedOrigins = (process.env.FRONTEND_URL || process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: allowedOrigins.length ? allowedOrigins : true
+  })
+);
 app.use(express.json({ limit: "2mb" }));
 
 function now() {
@@ -630,6 +639,6 @@ app.get("*", async (req, res) => {
   }
 });
 
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`Node backend running at http://127.0.0.1:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Node backend running at http://${HOST}:${PORT}`);
 });

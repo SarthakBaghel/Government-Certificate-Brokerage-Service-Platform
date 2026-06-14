@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: sevasetu-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SEVASETU_TOKEN_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
